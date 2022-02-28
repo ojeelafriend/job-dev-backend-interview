@@ -4,7 +4,7 @@
   "description": "API RESTful capaz de administrar restaurantes y productos en su menú",
   "main": "main.js",
   "scripts": {
-    "dev": "tsc && cross-env NODE_ENV=development node ./build/src/main.js",
+    "dev": "tsc && cross-env NODE_ENV=development node ./build/src/App/main.js",
     "test": "cross-env NODE_ENV=test jest"
   },
   "author": "odev",
