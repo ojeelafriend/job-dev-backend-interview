@@ -20,12 +20,7 @@ const setConnectionCredentials = (
 };
 
 if (process.env.NODE_ENV == 'development') {
-  setConnectionCredentials(
-    process.env.USER_DB,
-    process.env.HOST_DB,
-    process.env.PW_DB,
-    process.env.NAME_DB
-  );
+  setConnectionCredentials(process.env.USER_DB, process.env.HOST_DB, process.env.PW_DB, process.env.NAME_DB);
 } else {
   setConnectionCredentials(
     process.env.USER_TEST_DB,
@@ -35,22 +30,18 @@ if (process.env.NODE_ENV == 'development') {
   );
 }
 
-const pool = new Pool(config);
+export const pool = new Pool(config);
 
 export const run = () => {
   pool
     .connect()
     .then(() => console.log('Connected to database'))
-    .catch((err: string) =>
-      console.log(`error connecting to database: ${err}`)
-    );
+    .catch((err: string) => console.log(`error connecting to database: ${err}`));
 };
 
 export const stop = () => {
   pool
     .end()
     .then(() => console.log('Connection close'))
-    .catch((err: string) =>
-      console.log(`error closing the connection: ${err}`)
-    );
+    .catch((err: string) => console.log(`error closing the connection: ${err}`));
 };
