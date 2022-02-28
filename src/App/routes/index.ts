@@ -1,5 +1,9 @@
 import { Express } from 'express';
 
-export const routes = (server: Express) => {
-  server.use('/');
+import restaurant from './restaurant';
+
+const routes = (server: Express) => {
+  server.use('/restaurant', restaurant);
 };
+
+export default routes;
