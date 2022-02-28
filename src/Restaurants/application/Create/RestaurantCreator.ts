@@ -1,5 +1,5 @@
-import { Restaurant } from '../domain/Restaurant';
-import { RestaurantRepository } from '../domain/RestaurantRepository';
+import { Restaurant } from '../../domain/Restaurant';
+import { RestaurantRepository } from '../../domain/RestaurantRepository';
 import { Validator, ValidatorState } from './Validator';
 
 export class CreatorRestaurant extends Validator {

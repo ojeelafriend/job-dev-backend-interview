@@ -1,8 +1,6 @@
 import { Express } from 'express';
 
-import restaurant from './restaurant.routes';
-
-//localhost:3000/restaurant/register
+import restaurant from './restaurant';
 
 const routes = (server: Express) => {
   server.use('/restaurant', restaurant);

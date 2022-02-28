@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 import { success, error } from './response';
 
 import { PostgresSqlRepository } from '../../Restaurants/framework/PostgreSqlRepository';
-import { CreatorRestaurant } from '../../Restaurants/application/CreatorRestaurant';
+import { CreatorRestaurant } from '../../Restaurants/application/Create/RestaurantCreator';
 
 const router: Router = Router();
 
