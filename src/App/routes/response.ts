@@ -1,6 +1,6 @@
 import { Response } from 'express';
-
-export const success = (message: string, statusCode: number, res: Response): void => {
+//buscar una forma de añadir un tipo de mensaje como un array de un tipo genérico.
+export const success = (message: any, statusCode: number, res: Response): void => {
   res.json(message).status(statusCode);
 };
 
