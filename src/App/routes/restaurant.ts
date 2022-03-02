@@ -2,19 +2,19 @@ import { Router, Request, Response } from 'express';
 import { success, error } from './response';
 
 import { PostgresSqlRepository } from '../../Restaurants/framework/PostgreSqlRepository';
-import { CreatorRestaurant } from '../../Restaurants/application/Create/RestaurantCreator';
+import { RestaurantCreator } from '../../Restaurants/application/Create/RestaurantCreator';
 
 const router: Router = Router();
 
 const repository = new PostgresSqlRepository();
-const restaurant = new CreatorRestaurant(repository);
+const useCaseRegister = new RestaurantCreator(repository);
 
 router.post('/register', async (req: Request, res: Response) => {
   const { restaurantName, location, openingTime, urlImage } = req.body;
 
   console.log(location, openingTime, urlImage);
 
-  restaurant
+  useCaseRegister
     .create({ restaurantName, location, openingTime, urlImage })
     .then(({ message }) => {
       success(message, 201, res);
