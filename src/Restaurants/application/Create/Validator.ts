@@ -1,4 +1,4 @@
-import { Restaurant } from '../domain/Restaurant';
+import { Restaurant } from '../../domain/Restaurant';
 
 export type ValidatorState = {
   message: string;
@@ -23,8 +23,6 @@ export abstract class Validator {
   private isValid(urlImage: string): boolean {
     let urlRegExp: RegExp = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
 
-    if (!urlRegExp.test(urlImage)) return false;
-
-    return true;
+    return urlRegExp.test(urlImage);
   }
 }
