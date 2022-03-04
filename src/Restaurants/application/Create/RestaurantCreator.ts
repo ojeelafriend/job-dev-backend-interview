@@ -16,7 +16,9 @@ export class RestaurantCreator extends Validator {
     return new Promise(async (resolve, reject) => {
       validatorState = await this.validateParams(params);
 
-      if (!validatorState.state) reject(validatorState);
+      console.log(validatorState.message, validatorState.state);
+
+      if (!validatorState.state) return reject(validatorState);
 
       this.repository
         .save(params)
