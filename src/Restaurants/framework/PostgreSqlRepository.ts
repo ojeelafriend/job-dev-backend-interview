@@ -24,7 +24,6 @@ export class PostgresSqlRepository implements RestaurantRepository {
 
   public async checkRestaurant(restaurantName: string): Promise<boolean> {
     const values: Array<string> = [restaurantName];
-
     const sql: string = `SELECT * FROM restaurant WHERE name = $1`;
 
     const queryResult: QueryResult<any> = await pool.query(sql, values);
@@ -41,6 +40,16 @@ export class PostgresSqlRepository implements RestaurantRepository {
 
     const { rows } = queryResult;
     console.log(rows);
+
+    return rows;
+  }
+
+  public async getOne(restaurantName: string): Promise<Restaurant[]> {
+    const values: Array<string> = [restaurantName];
+    const sql: string = `SELECT * FROM restaurant WHERE name = $1`;
+
+    const queryResult: QueryResult<any> = await pool.query(sql, values);
+    let { rows } = queryResult;
 
     return rows;
   }
