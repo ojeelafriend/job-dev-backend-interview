@@ -4,7 +4,7 @@ import { success, error } from './response';
 import { PostgresSqlRepository } from '../../Restaurants/framework/PostgreSqlRepository';
 
 import { RestaurantCreator } from '../../Restaurants/application/Create/RestaurantCreator';
-import { ListRestaurants } from '../../Restaurants/application/ListAll/ListRestaurants';
+import { ListRestaurants } from '../../Restaurants/application/List/ListRestaurants';
 
 const router: Router = Router();
 
@@ -24,6 +24,20 @@ router.get('/list', async (req: Request, res: Response) => {
     });
 });
 
+router.get('/:restaurantName', async (req: Request, res: Response) => {
+  let { restaurantName } = req.params;
+
+  console.log(restaurantName);
+  useCaseList
+    .listOne(restaurantName)
+    .then((array) => {
+      success(array, 200, res);
+    })
+    .catch(({ message, details }) => {
+      error(message, 404, details, res);
+    });
+});
+
 router.post('/register', async (req: Request, res: Response) => {
   const { restaurantName, location, openingTime, urlImage } = req.body;
 
@@ -33,7 +47,6 @@ router.post('/register', async (req: Request, res: Response) => {
       success(message, 201, res);
     })
     .catch(({ message }) => error(message, 404, message, res));
-    
 });
 
 export default router;
