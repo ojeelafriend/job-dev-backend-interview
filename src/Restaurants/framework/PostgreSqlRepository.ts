@@ -1,4 +1,3 @@
-import { QueryResult } from 'pg';
 import { pool } from '../../App/database';
 
 import { Restaurant } from '../domain/Restaurant';
@@ -26,8 +25,7 @@ export class PostgresSqlRepository implements RestaurantRepository {
     const values: Array<string> = [restaurantName];
     const sql: string = `SELECT * FROM restaurant WHERE name = $1`;
 
-    const queryResult: QueryResult<any> = await pool.query(sql, values);
-    let { rows } = queryResult;
+    let { rows } = await pool.query(sql, values);
 
     if (rows.length === 0) return false;
 
@@ -36,10 +34,7 @@ export class PostgresSqlRepository implements RestaurantRepository {
 
   public async getAll(): Promise<Restaurant[]> {
     const sql: string = `SELECT * FROM restaurant`;
-    const queryResult: QueryResult<any> = await pool.query(sql);
-
-    const { rows } = queryResult;
-    console.log(rows);
+    let { rows } = await pool.query(sql);
 
     return rows;
   }
@@ -48,9 +43,23 @@ export class PostgresSqlRepository implements RestaurantRepository {
     const values: Array<string> = [restaurantName];
     const sql: string = `SELECT * FROM restaurant WHERE name = $1`;
 
-    const queryResult: QueryResult<any> = await pool.query(sql, values);
-    let { rows } = queryResult;
+    let { rows } = await pool.query(sql, values);
 
     return rows;
+  }
+
+  public async update(restaurantUpdate: Restaurant, identification: string): Promise<any> {
+    let setValues: string[] = [];
+
+    let { urlImage, restaurantName, location, openingTime } = restaurantUpdate;
+
+    if (!(await this.checkRestaurant(identification))) return new Error('Restaurant not exists').message;
+
+    const sql: string = `UPDATE restaurant SET url_image=$1, name=$2, location=$3, opening_time=$4 WHERE name = $5;`;
+    console.log(sql);
+
+    await pool.query(sql, [urlImage, restaurantName, location, openingTime, identification]).then(() => {
+      console.log('Restaurant updated');
+    });
   }
 }
