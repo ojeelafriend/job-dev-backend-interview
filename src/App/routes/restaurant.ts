@@ -8,6 +8,8 @@ import { ListRestaurants } from '../../Restaurants/application/List/ListRestaura
 
 import { DetailChanger } from '../../Restaurants/application/Modifier/DetailChanger';
 
+import { Remover } from '../../Restaurants/application/Delete/Remover';
+
 const router: Router = Router();
 
 const repository = new PostgresSqlRepository();
@@ -15,6 +17,7 @@ const repository = new PostgresSqlRepository();
 const useCaseRegister = new RestaurantCreator(repository);
 const useCaseList = new ListRestaurants(repository);
 const useCaseModify = new DetailChanger(repository);
+const useCaseDelete = new Remover(repository);
 
 router.get('/list', async (req: Request, res: Response) => {
   useCaseList
@@ -57,6 +60,15 @@ router.put('/:restaurantName', async (req: Request, res: Response) => {
 
   useCaseModify
     .run(req.body, restaurantName)
+    .then((message) => success(message, 200, res))
+    .catch((reason) => error('Internal error', 404, reason, res));
+});
+
+router.delete('/remove/:restaurantName', (req, res) => {
+  let { restaurantName } = req.params;
+
+  useCaseDelete
+    .run(restaurantName)
     .then((message) => success(message, 200, res))
     .catch((reason) => error('Internal error', 404, reason, res));
 });
