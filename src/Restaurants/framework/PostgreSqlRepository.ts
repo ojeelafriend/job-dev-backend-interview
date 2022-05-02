@@ -62,4 +62,9 @@ export class PostgresSqlRepository implements RestaurantRepository {
       console.log('Restaurant updated');
     });
   }
+
+  public async delete(identification: string): Promise<any> {
+    const sql: string = `DELETE FROM restaurant WHERE name=$1;`;
+    await pool.query(sql, [identification]).then(() => console.log('Restaurant delete'));
+  }
 }
